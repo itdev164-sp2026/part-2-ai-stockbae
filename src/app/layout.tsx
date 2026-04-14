@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Geist } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Header } from "@/components/header";
+import { DashboardShell } from "@/components/dashboard-shell";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -31,8 +31,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-          <main className="mx-auto max-w-5xl px-4 py-8">{children}</main>
+          <DashboardShell>{children}</DashboardShell>
         </ThemeProvider>
       </body>
     </html>

@@ -78,3 +78,62 @@ in the dashboard-shell.tsx file.
 It didn't delete anything I wanted to preserve from activity 1, but it seems important to
 instruct it which existing code should or shouldn't be changed. It did create a runtime error
 on the first prompt which was unexpected, but also fixed it easily with a follow up prompt.
+
+
+
+
+
+## Activity 3: Server-Side Data with Supabase
+
+### Prompt 1
+
+**What I asked:**
+
+Using the Supabase client at src/lib/supabase.ts, create a new Server Component
+at src/app/projects/page.tsx that:
+
+1. Fetches all records from the "projects" table in Supabase
+2. Displays them in a professional layout using shadcn/ui Card components
+   (run `npx shadcn@latest add card` if needed)
+3. Each card should show the project title, description, and a status badge
+4. The status badge should be color-coded:
+   - "active" = green
+   - "completed" = blue
+   - "archived" = gray
+
+Use @workspace context to match the styling of our existing Dashboard.
+This must be a React Server Component (async function, no "use client").
+Do NOT use useEffect or useState for data fetching.
+
+**What happened:**
+
+The agent used async/await on the first try and I did not have to correct it. It added a shadcn Card component
+in card.tsx and a new async server route at page.tsx. After completing this the agent validated its own work and
+checked for the async function component and that is didnt use useEffect/useState data fetching.
+
+### Prompt 2
+
+**What I asked:**
+
+The breadcrumb in src/app/layout.tsx always shows "Overview" because the page
+name is hardcoded. Extract the breadcrumb into its own client component at
+src/components/breadcrumb-nav.tsx that uses usePathname() from next/navigation
+to display the correct page name. Map "/" to "Overview", "/projects" to
+"Projects", and "/settings" to "Settings". Keep "ITDEV-164" as the first
+breadcrumb segment. Then update layout.tsx to use the new component.
+
+
+**What happened:**
+
+My project already had a functioning breadcrumb from the last activity, but the logic was in
+the shell component. The agent put the logic into breadcrumb-nav.tsx and used usePathname()
+from next/navigation. It updated dashboard-shell.tsx to use the new component.
+
+### Reflection
+
+> How does fetching data on the server feel different from the useEffect
+> pattern you used in Web Programming 1? What are the advantages you
+> noticed? Did anything surprise you about how simple server-side
+> data fetching is in the App Router?
+
+Fetching data on the server is lot cleaner than the useEffect pattern. With useEffect, I had to render first, then fetch, manage loading/error state, and handle extra client-side logic. In the App Router, I can just use async/await directly in the page, so the data is ready when the page loads. There is less boilerplate and better initial page load behavior.

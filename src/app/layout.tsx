@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Geist } from "next/font/google";
+import { BreadcrumbNav } from "@/components/breadcrumb-nav";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DashboardShell } from "@/components/dashboard-shell";
 import "./globals.css";
@@ -31,7 +32,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <DashboardShell>{children}</DashboardShell>
+          <DashboardShell breadcrumb={<BreadcrumbNav />}>{children}</DashboardShell>
         </ThemeProvider>
       </body>
     </html>

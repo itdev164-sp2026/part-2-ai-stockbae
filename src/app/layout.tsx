@@ -3,6 +3,7 @@ import { Inter, Geist } from "next/font/google";
 import { BreadcrumbNav } from "@/components/breadcrumb-nav";
 import { ThemeProvider } from "@/components/theme-provider";
 import { DashboardShell } from "@/components/dashboard-shell";
+import { Toaster } from "@/components/ui/sonner";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <DashboardShell breadcrumb={<BreadcrumbNav />}>{children}</DashboardShell>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

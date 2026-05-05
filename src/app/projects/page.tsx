@@ -1,3 +1,6 @@
+import Link from "next/link";
+
+import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase";
 
@@ -38,13 +41,21 @@ export default async function ProjectsPage() {
   return (
     <div className="space-y-8">
       <section className="space-y-2">
-        <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">
-          Project Portfolio
-        </p>
-        <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Projects</h1>
-        <p className="max-w-3xl text-muted-foreground">
-          Current and completed work pulled directly from Supabase.
-        </p>
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div className="space-y-2">
+            <p className="text-sm font-medium tracking-wider text-muted-foreground uppercase">
+              Project Portfolio
+            </p>
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl">Projects</h1>
+            <p className="max-w-3xl text-muted-foreground">
+              Current and completed work pulled directly from Supabase.
+            </p>
+          </div>
+
+          <Button asChild>
+            <Link href="/projects/new">New Project</Link>
+          </Button>
+        </div>
       </section>
 
       {error ? (

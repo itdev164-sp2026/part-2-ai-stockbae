@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { FolderOpen, Home, Settings } from "lucide-react";
+import { FolderOpen, Home, LogOut, Settings } from "lucide-react";
+import type { User } from "@supabase/supabase-js";
 
 import {
+  SidebarFooter,
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -14,13 +16,20 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarSeparator,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
+import { signOutAction } from "@/app/actions";
 
 type NavItem = {
   title: string;
   href: string;
   icon: React.ComponentType<{ className?: string }>;
+};
+
+type AppSidebarProps = {
+  user: User | null;
 };
 
 const navItems: NavItem[] = [
@@ -41,7 +50,7 @@ const navItems: NavItem[] = [
   },
 ];
 
-export function AppSidebar() {
+export function AppSidebar({ user }: AppSidebarProps) {
   const pathname = usePathname();
 
   const isActive = (href: string) => {
@@ -86,6 +95,24 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      {user ? (
+        <>
+          <SidebarSeparator />
+          <SidebarFooter>
+            <form action={signOutAction}>
+              <Button
+                type="submit"
+                variant="outline"
+                className="w-full justify-start gap-2 border-sidebar-border bg-sidebar text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground"
+              >
+                <LogOut className="h-4 w-4" />
+                <span>Sign Out</span>
+              </Button>
+            </form>
+          </SidebarFooter>
+        </>
+      ) : null}
 
       <SidebarRail />
     </Sidebar>

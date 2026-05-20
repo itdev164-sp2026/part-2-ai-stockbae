@@ -1,3 +1,7 @@
+## Live Site
+
+Deployed at: [your-vercel-url](https://your-project-name.vercel.app)
+
 # ITDEV-164 — Web Programming 2
 
 AI-native full-stack development with Next.js, Tailwind CSS, and Supabase.

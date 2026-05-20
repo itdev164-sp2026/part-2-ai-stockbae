@@ -274,3 +274,87 @@ because it is centralized instead of spreading authentication around on each
 page individually. The number of files that changed was about what I expected,
 maybe a couple more. I manually added files to context and the agent seemed to
 do a really clean job.
+
+
+
+## Activity 6: Deployment, Webhooks, & AI-Testing
+
+### Prompt 1
+
+**What I asked:**
+
+I have a Next.js app with Supabase Auth. Using @workspace context to
+understand the app structure, write an End-to-End (E2E) test file at
+tests/auth.spec.ts using Playwright.
+
+The tests should verify:
+
+1. LOGIN PAGE VISIBLE: Navigate to /login and confirm the login form
+   is visible (check for email input, password input, and submit button).
+
+2. REDIRECT AFTER LOGIN: After a successful login with valid credentials,
+   the user is redirected to the dashboard or projects page.
+
+3. SIDEBAR NAVIGATION: After login, verify that the sidebar navigation
+   links are visible: "Overview", "Projects", and "Settings".
+
+Requirements:
+- Use role-based locators (getByRole, getByLabel, getByText) instead of
+  CSS selectors or test IDs. This makes tests more accessible and resilient
+  to UI changes.
+- Add clear test descriptions that explain what each test verifies.
+- Handle the async nature of navigation and page loads with proper
+  Playwright waiting strategies.
+- Read test credentials from process.env.TEST_USER_EMAIL and
+  process.env.TEST_USER_PASSWORD. Do not hardcode credentials. If those
+  variables are not set, the credentialed tests should skip with a clear
+  message rather than fail.
+
+**What happened:**
+
+The agent scaffolded Playwright tests that use role-based locators, read
+credentials from `process.env` and skip credentialed tests when variables
+are unset, and applied robust waiting strategies for navigation and page
+loads. The tests didn't work on the first try and a follow up prompt was
+needed.
+
+### Prompt 2
+
+**What I asked:**
+
+This Playwright test is failing with the following error:
+3 failed
+    tests\auth.spec.ts:18:5 › Login page is visible with email, password, and submit controls ──────
+    tests\auth.spec.ts:35:7 › Authenticated auth flow › Redirects to the dashboard after a successful login 
+    tests\auth.spec.ts:40:7 › Authenticated auth flow › Shows the sidebar navigation links after login 
+
+Look at the actual component code in @workspace and fix the test
+to match the real UI. Use role-based locators.
+
+**What happened:**
+
+The agent inspected the real UI components in the workspace and updated the
+tests to match the actual role-based elements and improved wait logic.
+It looks like it iterated twice before getting it right. The new
+tests now align with the app and pass locally when run with valid
+credentials.
+
+### Reflection
+
+The agent can test and troubleshoot much faster than I can myself. It seems
+to check it's own work which makes me a little more confident in its ability
+to create polished working final products, but it also needed follow up prompts
+so a human developer still plays a big role in agentic coding.
+
+### Course Reflection
+
+> Look back at your complete PROMPTS.md from Activity 1 to Activity 6.
+> How has your prompting strategy evolved? What do you do differently
+> now compared to your first prompt in Activity 1? What is the most
+> important thing you learned about working with AI coding tools?
+
+AI coding tools work best with as much context and instruction as you have to give them.
+Detailing exactly where you want changes made and what to do vs. what not to do seems
+to be very important. Separating work into smaller goals so you can go into more detailed
+instructions for the agent also seems beneficial. That also allows you to check smaller sections
+of generated code for errors.

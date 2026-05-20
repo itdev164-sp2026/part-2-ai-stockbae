@@ -312,8 +312,11 @@ Requirements:
 
 **What happened:**
 
-> (Did the Agent use role-based locators? Did it understand the auth
-> flow from your workspace context? Did the tests pass on the first run?)
+The agent scaffolded Playwright tests that use role-based locators, read
+credentials from `process.env` and skip credentialed tests when variables
+are unset, and applied robust waiting strategies for navigation and page
+loads. The tests didn't work on the first try and a follow up prompt was
+needed.
 
 ### Prompt 2
 
@@ -330,14 +333,18 @@ to match the real UI. Use role-based locators.
 
 **What happened:**
 
-> (Describe the iterative process — how many rounds did it take
-> to get the tests passing?)
+The agent inspected the real UI components in the workspace and updated the
+tests to match the actual role-based elements and improved wait logic.
+It looks like it iterated twice before getting it right. The new
+tests now align with the app and pass locally when run with valid
+credentials.
 
 ### Reflection
 
-> How does having an AI write and run tests change your confidence in
-> "hitting the deploy button"? Did the Agent catch anything you would
-> have missed? How does this compare to manually testing in the browser?
+The agent can test and troubleshoot much faster than I can myself. It seems
+to check it's own work which makes me a little more confident in its ability
+to create polished working final products, but it also needed follow up prompts
+so a human developer still plays a big role in agentic coding.
 
 ### Course Reflection
 
@@ -345,3 +352,9 @@ to match the real UI. Use role-based locators.
 > How has your prompting strategy evolved? What do you do differently
 > now compared to your first prompt in Activity 1? What is the most
 > important thing you learned about working with AI coding tools?
+
+AI coding tools work best with as much context and instruction as you have to give them.
+Detailing exactly where you want changes made and what to do vs. what not to do seems
+to be very important. Separating work into smaller goals so you can go into more detailed
+instructions for the agent also seems beneficial. That also allows you to check smaller sections
+of generated code for errors.
